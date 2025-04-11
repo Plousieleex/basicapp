@@ -65,7 +65,7 @@ export default function RegisterForm() {
         onPress={handleRegister}
         style={{ backgroundColor: 'blue' }}
       />
-      <CustomHomeButton title="Ana Sayfa" />
+      <CustomHomeButton title="Home Page"/>
     </View>
   );
 }
