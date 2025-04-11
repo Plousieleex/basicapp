@@ -34,7 +34,7 @@ export default function RegisterForm() {
         Alert.alert(json.message);
       }
     } catch (err) {
-      Alert.alert('Sunucu hatası');
+      Alert.alert('Server error');
     }
   };
 
@@ -42,7 +42,7 @@ export default function RegisterForm() {
     <View style={styles.container}>
       <Text style={styles.title}>Register</Text>
       <CustomInput
-        label="Ad Soyad"
+        label="Name Surname"
         placeholder="Enter your name and surname"
         value={nameSurname}
         onChangeText={setNameSurname}
@@ -54,7 +54,7 @@ export default function RegisterForm() {
         onChangeText={setEmail}
       />
       <CustomInput
-        label="Şifre"
+        label="Password"
         placeholder="Enter your password"
         value={password}
         onChangeText={setPassword}
