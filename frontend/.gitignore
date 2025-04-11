@@ -1,0 +1,16 @@
+# node_modules
+node_modules/
+
+# Expo & React Native
+.expo/
+.expo-shared/
+*.log
+
+# Build
+dist/
+build/
+android/
+ios/
+
+# Environment
+.env
