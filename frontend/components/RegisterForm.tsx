@@ -1,38 +1,25 @@
 import React, { useState } from 'react';
 import { View, Text, Alert, StyleSheet } from 'react-native';
-import CustomInput from './CustomInput';
-import CustomButton from './CustomButton';
-import CustomHomeButton from './CustomHomeButton';
+import CustomInput from '../components/CustomInput';
+import CustomButton from '../components/CustomButton';
+import CustomHomeButton from '../components/CustomHomeButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { useAuth } from '@/customHooks/useAuth';
+import { useAuth } from '@/contexts/AuthContext';
+import { registerUser } from '@/services/auth';
 
 export default function RegisterForm() {
   const [nameSurname, setNameSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  const { setUser, setToken } = useAuth();
+  const { user, token } = useAuth();
 
   const handleRegister = async () => {
     try {
-      const res = await fetch('http://192.168.137.1:3000/api/v1/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nameSurname, email, password }),
-      });
+      const json = await registerUser(nameSurname, email, password);
 
-      const json = await res.json();
-
-      if (res.ok) {
-        await AsyncStorage.setItem('token', json.token);
-        await AsyncStorage.setItem('user', JSON.stringify(json.data.user));
-        setToken(json.token);
-        setUser(json.data.user);
-        router.replace('/Screens/HomeScreen');
-      } else {
-        Alert.alert(json.message);
-      }
+      router.replace('/Screens/HomeScreen');
     } catch (err) {
       Alert.alert('Server error');
     }
@@ -61,11 +48,11 @@ export default function RegisterForm() {
         secureTextEntry
       />
       <CustomButton
-        title="Kayıt Ol"
+        title="Register"
         onPress={handleRegister}
         style={{ backgroundColor: 'blue' }}
       />
-      <CustomHomeButton title="Home Page"/>
+      <CustomHomeButton title="Home Page" />
     </View>
   );
 }

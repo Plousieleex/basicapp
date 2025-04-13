@@ -5,33 +5,22 @@ import CustomButton from '../components/CustomButton';
 import CustomHomeButton from '../components/CustomHomeButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { useAuth } from '@/customHooks/useAuth';
-import loginUser from '@/services/auth'
+import { useAuth } from '@/contexts/AuthContext';
+import { loginUser } from '@/services/auth';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  const { setUser, setToken } = useAuth();
+  const { login } = useAuth();
 
   const handleLogin = async () => {
     try {
-      const res = await loginUser(email, password);
-      });
+      await login(email, password);
 
-      const json = await res.json();
-
-      if (res.ok) {
-        await AsyncStorage.setItem('token', json.token);
-        await AsyncStorage.setItem('user', JSON.stringify(json.data.user));
-        setToken(json.token);
-        setUser(json.data.user);
-        router.replace('/Screens/HomeScreen');
-      } else {
-        Alert.alert(json.message);
-      }
+      router.navigate('/');
     } catch (err) {
-      Alert.alert('Sunucu hatası');
+      Alert.alert('Server error.');
     }
   };
 
