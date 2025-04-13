@@ -43,7 +43,7 @@ export default function LoginForm() {
       <CustomButton
         title="Login"
         onPress={handleLogin}
-        style={{ backgroundColor: 'green' }}
+        style={{ backgroundColor: '#84171E' }}
       />
       <CustomHomeButton title="Home Page" />
     </View>
@@ -51,11 +51,16 @@ export default function LoginForm() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20 },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: 'black',
   },
 });

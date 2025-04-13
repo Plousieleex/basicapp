@@ -28,12 +28,3 @@ exports.signInUserController = handleAsync(async (req, res, next) => {
     data: { user },
   });
 });
-
-exports.getAllUsers = handleAsync(async (req, res, next) => {
-  const users = await authService.getAllUsersService();
-
-  res.status(200).json({
-    status: 'success',
-    data: users,
-  });
-});

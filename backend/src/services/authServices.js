@@ -52,16 +52,3 @@ exports.signInUserService = async (email, password) => {
 
   return { user, token };
 };
-
-exports.getAllUsersService = async () => {
-  const users = await prisma.users.findMany({
-    select: {
-      id: true,
-      email: true,
-      nameSurname: true,
-      createdAt: true,
-    },
-  });
-
-  return users;
-};
