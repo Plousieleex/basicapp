@@ -13,13 +13,13 @@ export default function RegisterForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  const { user, token } = useAuth();
+  const {register} = useAuth();
 
   const handleRegister = async () => {
     try {
-      const json = await registerUser(nameSurname, email, password);
+      await register(nameSurname, email, password);
 
-      router.replace('/Screens/HomeScreen');
+      router.replace('/');
     } catch (err) {
       Alert.alert('Server error');
     }
