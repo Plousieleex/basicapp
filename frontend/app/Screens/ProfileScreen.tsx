@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomButton from '@/components/CustomButton';
+import MyOrdersScreen from './MyOrdersScreen';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ProfileStackParamList } from '@/navigators/ProfileStackNavigator';
 
 import {
   View,
@@ -10,14 +15,24 @@ import {
   Image,
   Alert,
   ActivityIndicator,
+  SafeAreaView,
+  Button,
 } from 'react-native';
+import { useAuth } from '@/contexts/AuthContext';
+
+type ProfileScreenNavigationProp = NativeStackNavigationProp<
+  ProfileStackParamList,
+  'Profile'
+>;
 
 export default function ProfileS() {
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
   const [userData, setUserData] = useState<{
     nameSurname: String;
     email: String;
   } | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const { logout } = useAuth();
   const imageUrl = 'https://cdn-icons-png.flaticon.com/512/6858/6858504.png';
 
   useEffect(() => {
@@ -78,20 +93,56 @@ export default function ProfileS() {
   }
 
   return (
-    <View style={styles.card}>
-      <Image source={{ uri: imageUrl }} style={styles.profileImage} />
-      <Text style={styles.nameSurname}>{userData.nameSurname}</Text>
-      <Text style={styles.email}>{userData.email}</Text>
-    </View>
+    <SafeAreaView style={{ backgroundColor: '#F4D9B5', flex: 1 }}>
+      <View style={styles.card}>
+        <Image source={{ uri: imageUrl }} style={styles.profileImage} />
+        <Text style={styles.welcome}>Welcome</Text>
+        <Text style={styles.nameSurname}>{userData.nameSurname}</Text>
+        <Text style={styles.email}>{userData.email}</Text>
+      </View>
+      <View style={styles.btnCard}>
+        <CustomButton
+          title="My Orders"
+          onPress={() => navigation.navigate('MyOrders')}
+          style={{ backgroundColor: '#231919' }}
+          textStyle={{ fontSize: 18 }}
+        />
+        <CustomButton
+          title="Settings"
+          onPress={() => {}}
+          style={{ backgroundColor: '#231919' }}
+          textStyle={{ fontSize: 18 }}
+        />
+        <CustomButton
+          title="Logout"
+          onPress={logout}
+          style={{ backgroundColor: '#231919' }}
+          textStyle={{ fontSize: 18 }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#EDC483',
     borderRadius: 10,
     padding: 15,
     alignItems: 'center',
+
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 3,
+
+    margin: 10,
+  },
+  btnCard: {
+    backgroundColor: '#EDC483',
+    borderRadius: 10,
+    padding: 15,
 
     shadowColor: '#000',
     shadowOpacity: 0.1,
@@ -107,6 +158,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginBottom: 15,
   },
+  welcome: {
+    fontSize: 22,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
   nameSurname: {
     fontSize: 18,
     fontWeight: '600',
@@ -114,7 +170,7 @@ const styles = StyleSheet.create({
   },
   email: {
     fontSize: 14,
-    color: '#666',
+    color: '#231919',
     textAlign: 'center',
   },
   centered: {

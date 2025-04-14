@@ -25,7 +25,8 @@ exports.signUpUserService = async ({ nameSurname, email, password }) => {
       },
     });
 
-    return newUser;
+    const token = jwt.signTokenLocal(newUser.id, newUser.userRole);
+    return { newUser, token };
   } catch (e) {
     await prisma.users.deleteMany({ where: { email: email } });
 

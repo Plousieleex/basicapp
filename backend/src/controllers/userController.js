@@ -12,3 +12,12 @@ exports.getUserProfile = handleAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.deleteUser = handleAsync(async (req, res, next) => {
+  const userID = req.user.id;
+  // Delete User
+});
+
+exports.updateUserPassword = handleAsync(async (req, res, next) => {
+  // Update user's password
+});

@@ -13,12 +13,20 @@ const TabBarIcon = ({ routeName, focused, color, size }: TabBarIconProps) => {
     | 'log-in'
     | 'log-in-outline'
     | 'person-add'
-    | 'person-add-outline' = 'log-in';
+    | 'person-add-outline'
+    | 'book'
+    | 'book-outline'
+    | 'person'
+    | 'person-outline' = 'log-in';
 
   if (routeName === 'Login') {
     iconName = focused ? 'log-in' : 'log-in-outline';
   } else if (routeName === 'Register') {
     iconName = focused ? 'person-add' : 'person-add-outline';
+  } else if (routeName === 'HomeTab') {
+    iconName = focused ? 'book' : 'book-outline';
+  } else if (routeName === 'ProfileTab') {
+    iconName = focused ? 'person' : 'person-outline';
   }
 
   return <Ionicons name={iconName} size={size} color={color} />;

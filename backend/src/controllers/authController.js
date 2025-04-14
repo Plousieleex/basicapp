@@ -2,7 +2,7 @@ const handleAsync = require('../utils/handleAsync');
 const authService = require('../services/authServices');
 
 exports.signUpUserController = handleAsync(async (req, res, next) => {
-  const newUser = await authService.signUpUserService({
+  const { newUser, token } = await authService.signUpUserService({
     nameSurname: req.body.nameSurname,
     email: req.body.email,
     password: req.body.password,

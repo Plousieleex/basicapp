@@ -16,6 +16,8 @@ const pool = new Pool({
 // Routers
 const authRouter = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
+const bookRouter = require('./routes/bookRoutes');
+const orderRouter = require('./routes/orderRoutes');
 
 const app = express();
 
@@ -42,6 +44,8 @@ app.use(
 // Routes
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', userRouter);
+app.use('/api/v1/book', bookRouter);
+app.use('/api/v1/order', orderRouter);
 
 // Unhandled Route Handler
 

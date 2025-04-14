@@ -19,6 +19,12 @@ enum UserRole {
   USER
 }
 
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
 model users {
   id Int @id @unique @default(autoincrement())
   nameSurname String
@@ -26,4 +32,39 @@ model users {
   password String
   userRole UserRole @default(USER)
   createdAt DateTime @default(now())
+  orders order[]
 }
+
+model books {
+  id Int @id @default(autoincrement())
+  title String 
+  author String?
+  description String?
+  price Float
+  imageUrl String?
+  createdAt DateTime @default(now())
+  orderItems orderItem[]
+}
+
+model order {
+  id Int @id @default(autoincrement())
+  user users @relation(fields: [userId], references: [id])
+  userId Int
+  createdAt DateTime @default(now())
+  status OrderStatus @default(PENDING)
+  orderItems orderItem[]
+}
+
+model orderItem {
+  id Int @id @default(autoincrement())
+  order order @relation(fields: [orderId], references: [id])
+  orderId Int
+  book books @relation(fields: [bookId], references: [id])
+  bookId Int
+  quantity Int @default(1)
+}
+
+
+
+
+
